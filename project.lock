@@ -1,0 +1,33 @@
+install:
+  cmd: python -m spacy run install
+  script:
+    - pip install -r requirements.txt
+    - wandb login
+  deps:
+    - path: requirements.txt
+      md5: 08a462edf0a2363a791b599121de62ad
+  outs: []
+  spacy_version: 3.1.1
+  spacy_git_version: ffaead8fe
+data:
+  cmd: python -m spacy run data
+  script:
+    - tar -xzf ./assets/aclImdb_v1.tar.gz -C ./assets/
+  deps:
+    - path: assets/aclImdb_v1.tar.gz
+      md5: 7c2ac02c03563afcf9b574c7e56c153a
+  outs:
+    - path: assets/aclImdb/train/
+      md5: c7e0ab54404de5c96ffe968372fecb3d
+    - path: assets/aclImdb/test/
+      md5: 44eadd64b52ce0aa53d88af6aafa9dae
+  spacy_version: 3.1.1
+  spacy_git_version: ffaead8fe
+train:
+  cmd: python -m spacy run train
+  script:
+    - python -m spacy train configs/default_config.cfg --output training/
+  deps: []
+  outs: []
+  spacy_version: 3.1.1
+  spacy_git_version: ffaead8fe
